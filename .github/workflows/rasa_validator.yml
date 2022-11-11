@@ -19,4 +19,3 @@ jobs:
           workspace: '${{ github.workspace }}/rasa'
           rasa_train: false
           rasa_test: false
-          data_validate_args: "--fail-on-warnings"
