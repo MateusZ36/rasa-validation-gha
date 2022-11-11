@@ -9,7 +9,7 @@ on:
 
 jobs:
     train_and_test:
-      if: github.event.pull_request.merged || github.event_name == "workflow_dispatch"
+      if: github.event.pull_request.merged || github.event_name == 'workflow_dispatch'
       runs-on: ubuntu-latest
       steps:
       - uses: actions/checkout@v3
