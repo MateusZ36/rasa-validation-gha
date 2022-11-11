@@ -1,0 +1,37 @@
+name: Rasa Train and Test
+on:
+  pull_request:
+    paths:
+      - rasa/**
+    types: [closed]
+  workflow_dispatch:
+
+
+jobs:
+    train_and_test:
+      if: github.event.pull_request.merged
+      runs-on: ubuntu-latest
+      steps:
+      - uses: actions/checkout@v3
+
+      - name: Validate
+        uses: RasaHQ/rasa-train-test-gha@2.1.0
+        with:
+          rasa_version: '2.8.25-full'
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          workspace: '${{ github.workspace }}/rasa'
+          data_validate: false
+
+      - name: Upload results
+        uses: actions/upload-artifact@v3
+        with:
+          name: Rasa Reports
+          path: |
+            rasa/results
+            rasa/reports
+
+      - name: Upload model
+        uses: actions/upload-artifact@v3
+        with:
+          name: Rasa model
+          path: rasa/models

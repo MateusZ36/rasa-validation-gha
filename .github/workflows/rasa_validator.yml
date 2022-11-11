@@ -1,0 +1,22 @@
+name: Rasa Validator
+on:
+  push:
+    paths:
+      - rasa/**
+  workflow_dispatch:
+
+jobs:
+    validate:
+      runs-on: ubuntu-latest
+      steps:
+      - uses: actions/checkout@v3
+
+      - name: Validate
+        uses: RasaHQ/rasa-train-test-gha@2.1.0
+        with:
+          rasa_version: '2.8.25-full'
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          workspace: '${{ github.workspace }}/rasa'
+          rasa_train: false
+          rasa_test: false
+          data_validate_args: "--fail-on-warnings"
